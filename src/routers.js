@@ -1,5 +1,5 @@
 import express, {Router} from "express";
-import SCIMMY from "scimmy";
+import SCIMMY from "@nyby/scimmy";
 import {Resources} from "./routers/resources.js";
 import {Schemas} from "./routers/schemas.js";
 import {ResourceTypes} from "./routers/resourcetypes.js";
@@ -70,9 +70,9 @@ export default class SCIMMYRouters extends Router {
      */
     constructor(authScheme = {}) {
         const {type, docUri, handler, context = (() => {})} = authScheme;
-        
+
         super({mergeParams: true});
-        
+
         // Make sure supplied authentication scheme is valid
         if (type === undefined)
             throw new TypeError("Missing required parameter 'type' from authentication scheme in SCIMRouters constructor");
@@ -84,16 +84,16 @@ export default class SCIMMYRouters extends Router {
             throw new TypeError(`Unknown authentication scheme type '${type}' in SCIMRouters constructor`);
         if (typeof context !== "function")
             throw new TypeError("Parameter 'context' must be of type 'function' for authentication scheme in SCIMRouters constructor");
-        
+
         // Register the authentication scheme, and other SCIM Service Provider Config options
         SCIMMY.Config.set({
             patch: true, filter: true, sort: true, bulk: true,
             authenticationSchemes: [{...authSchemeTypes[type], documentationUri: docUri}]
         });
-        
+
         // Make sure SCIM JSON is decoded in request body
         this.use(express.json({type: "application/scim+json", limit: SCIMMY.Config.get()?.bulk?.maxPayloadSize ?? "1mb"}));
-        
+
         // Listen for incoming requests to determine basepath for all resource types
         this.use("/", (req, res, next) => {
             res.setHeader("Content-Type", "application/scim+json");
@@ -102,10 +102,10 @@ export default class SCIMMYRouters extends Router {
             SCIMMY.Resources.ServiceProviderConfig.basepath(req.baseUrl);
             for (let Resource of Object.values(SCIMMY.Resources.declared()))
                 Resource.basepath(req.baseUrl);
-            
+
             next();
         });
-        
+
         // Make sure requests are authenticated using supplied auth handler method
         this.use(async (req, res, next) => {
             try {
@@ -117,7 +117,7 @@ export default class SCIMMYRouters extends Router {
                 res.status(401).send(new SCIMMY.Messages.Error({status: 401, message: ex.message}));
             }
         });
-        
+
         // Cast pagination query parameters from strings to numbers...
         this.use(({query}, res, next) => {
             for (let param of ["startIndex", "count"]) {
@@ -126,10 +126,10 @@ export default class SCIMMYRouters extends Router {
                     query[param] = +query[param];
                 }
             }
-            
+
             next();
         });
-        
+
         // Register core service provider endpoints
         this.use(new Schemas());
         this.use(new ResourceTypes());
@@ -137,12 +137,12 @@ export default class SCIMMYRouters extends Router {
         this.use(new Search(context));
         this.use(new Bulk(context));
         this.use(new Me(handler, context));
-        
+
         // Register endpoints for any declared resource types
         for (let Resource of Object.values(SCIMMY.Resources.declared())) {
             this.use(Resource.endpoint, new Resources(Resource, context));
         }
-        
+
         // If we get to this point, there's no matching endpoints
         this.use((req, res) => res.status(404).send());
     }

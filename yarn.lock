@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@nyby/scimmy@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@nyby/scimmy/-/scimmy-1.2.0.tgz#b463f4f83f6a240682458d56dbee9139a78eec3a"
+  integrity sha512-Tj3+CNHDRlxGYdayRqM3uznPfwOLxwpgatCyVqKmPTWYkyZp6whBUV64OsbjnnI9IqM1JMn5KMfnMtPmBG0bcQ==
+
 "@types/body-parser@*":
   version "1.19.5"
   resolved "https://registry.yarnpkg.com/@types/body-parser/-/body-parser-1.19.5.tgz#04ce9a3b677dc8bd681a17da1ab9835dc9d3ede4"
@@ -473,11 +478,6 @@ safe-buffer@5.2.1:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
-
-scimmy@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/scimmy/-/scimmy-1.2.0.tgz#0e95868fc070be60a6243e79d3f38ef3fefe8529"
-  integrity sha512-FUVMN3bIhVtgETbS8rGVUmbVnDtSrgHtAlUHaGYn0Fkkx7VPQGOJVRN+GjbwhqIA8Qm80DpeiJwaMoHXjvggqA==
 
 send@0.18.0:
   version "0.18.0"

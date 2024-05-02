@@ -1,13 +1,10 @@
 {
-  "name": "scimmy-routers",
+  "name": "@nyby/scimmy-routers",
   "description": "SCIMMY Express Routers",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": "sleelin",
   "license": "MIT",
   "type": "module",
-  "engines": {
-    "node": ">=16"
-  },
   "main": "./dist/routers.js",
   "types": "./dist/routers.d.ts",
   "exports": {

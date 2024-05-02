@@ -1,5 +1,5 @@
 import {Router} from "express";
-import SCIMMY from "scimmy";
+import SCIMMY from '@nyby/scimmy';
 
 /**
  * SCIMMY Search Endpoint Router
@@ -14,7 +14,7 @@ export class Search extends Router {
      */
     constructor(Resource, context = (Resource.prototype instanceof SCIMMY.Types.Resource ? (() => {}) : Resource)) {
         super({mergeParams: true});
-        
+
         // Respond to POST requests for /.search endpoint
         this.post("/.search", async (req, res) => {
             try {

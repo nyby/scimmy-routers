@@ -1,5 +1,5 @@
 import {Router} from "express";
-import SCIMMY from "scimmy";
+import SCIMMY from '@nyby/scimmy';
 
 /**
  * SCIMMY ResourceTypes Endpoints Router
@@ -11,7 +11,7 @@ export class ResourceTypes extends Router {
      */
     constructor() {
         super({mergeParams: true});
-        
+
         this.get("/ResourceTypes", async (req, res) => {
             try {
                 res.send(await new SCIMMY.Resources.ResourceType(req.query).read());
@@ -19,7 +19,7 @@ export class ResourceTypes extends Router {
                 res.status(ex.status ?? 500).send(new SCIMMY.Messages.Error(ex));
             }
         });
-        
+
         this.get("/ResourceTypes/:id", async (req, res) => {
             try {
                 res.send(await new SCIMMY.Resources.ResourceType(req.params.id, req.query).read());

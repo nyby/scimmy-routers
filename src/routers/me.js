@@ -1,5 +1,5 @@
 import {Router} from "express";
-import SCIMMY from "scimmy";
+import SCIMMY from '@nyby/scimmy';
 
 /**
  * SCIMMY Me Endpoint Router
@@ -14,7 +14,7 @@ export class Me extends Router {
      */
     constructor(handler, context) {
         super({mergeParams: true});
-        
+
         // Respond to GET requests for /Me endpoint
         this.get("/Me", async (req, res) => {
             try {
@@ -22,7 +22,7 @@ export class Me extends Router {
                 const isDeclared = SCIMMY.Resources.declared(SCIMMY.Resources.User);
                 // Only get the authenticated user if Users is declared and handler returns a string
                 const user = (isDeclared && typeof id === "string" ? await new SCIMMY.Resources.User(id).read(await context(req)) : false);
-                
+
                 // Set the actual location of the user resource, or respond with 501 not implemented
                 if (user && user?.meta?.location) res.location(user.meta.location).send(user);
                 else res.status(501).send();
@@ -30,8 +30,8 @@ export class Me extends Router {
                 res.status(ex.status ?? 500).send(new SCIMMY.Messages.Error(ex));
             }
         });
-        
-        // Respond with 501 not implemented to all other requests for /Me endpoint 
+
+        // Respond with 501 not implemented to all other requests for /Me endpoint
         this.use("/Me", (req, res) => {
             res.status(501).send();
         });

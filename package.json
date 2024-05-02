@@ -1,7 +1,7 @@
 {
   "name": "@nyby/scimmy-routers",
   "description": "SCIMMY Express Routers",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "author": "sleelin",
   "license": "MIT",
   "type": "module",

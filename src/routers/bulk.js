@@ -1,5 +1,5 @@
 import {Router} from "express";
-import SCIMMY from "scimmy";
+import SCIMMY from '@nyby/scimmy';
 
 /**
  * SCIMMY Bulk Endpoint Router
@@ -13,12 +13,12 @@ export class Bulk extends Router {
      */
     constructor(context) {
         super({mergeParams: true});
-        
+
         // Respond to POST requests for /Bulk endpoint
         this.post("/Bulk", async (req, res) => {
             try {
                 const {supported, maxPayloadSize, maxOperations} = SCIMMY.Config.get()?.bulk ?? {};
-                
+
                 if (!supported) {
                     res.status(501).send();
                 } else if (Number(req.header("content-length")) > maxPayloadSize) {

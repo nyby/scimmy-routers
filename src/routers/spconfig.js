@@ -1,5 +1,5 @@
 import {Router} from "express";
-import SCIMMY from "scimmy";
+import SCIMMY from '@nyby/scimmy';
 
 /**
  * SCIMMY ServiceProviderConfig Endpoints Router
@@ -11,7 +11,7 @@ export class ServiceProviderConfig extends Router {
      */
     constructor() {
         super({mergeParams: true});
-        
+
         this.get("/ServiceProviderConfig", async (req, res) => {
             try {
                 res.send(await new SCIMMY.Resources.ServiceProviderConfig(req.query).read());

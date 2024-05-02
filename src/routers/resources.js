@@ -1,6 +1,6 @@
 import {Router} from "express";
 import {Search} from "./search.js";
-import SCIMMY from "scimmy";
+import SCIMMY from '@nyby/scimmy';
 
 /**
  * SCIMMY Resource Type Instance Endpoints Router
@@ -14,10 +14,10 @@ export class Resources extends Router {
      */
     constructor(Resource, context) {
         super({mergeParams: true});
-        
+
         // Mount /.search endpoint for resource
         this.use(new Search(Resource, context));
-        
+
         this.get("/", async (req, res) => {
             try {
                 res.send(await new Resource(req.query).read(await context(req)));
@@ -25,7 +25,7 @@ export class Resources extends Router {
                 res.status(ex.status ?? 500).send(new SCIMMY.Messages.Error(ex));
             }
         });
-        
+
         this.get("/:id", async (req, res) => {
             try {
                 res.send(await new Resource(req.params.id, req.query).read(await context(req)));
@@ -33,7 +33,7 @@ export class Resources extends Router {
                 res.status(ex.status ?? 500).send(new SCIMMY.Messages.Error(ex));
             }
         });
-        
+
         this.post("/", async (req, res) => {
             try {
                 res.status(201).send(await new Resource(req.query).write(req.body, await context(req)));
@@ -41,7 +41,7 @@ export class Resources extends Router {
                 res.status(ex.status ?? 500).send(new SCIMMY.Messages.Error(ex));
             }
         });
-        
+
         this.put("/:id", async (req, res) => {
             try {
                 res.send(await new Resource(req.params.id, req.query).write(req.body, await context(req)));
@@ -49,7 +49,7 @@ export class Resources extends Router {
                 res.status(ex.status ?? 500).send(new SCIMMY.Messages.Error(ex));
             }
         });
-        
+
         this.patch("/:id", async (req, res) => {
             try {
                 const value = await new Resource(req.params.id, req.query).patch(req.body, await context(req));
@@ -58,7 +58,7 @@ export class Resources extends Router {
                 res.status(ex.status ?? 500).send(new SCIMMY.Messages.Error(ex));
             }
         });
-        
+
         this.delete("/:id", async (req, res) => {
             try {
                 res.status(204).send(await new Resource(req.params.id).dispose(await context(req)));
